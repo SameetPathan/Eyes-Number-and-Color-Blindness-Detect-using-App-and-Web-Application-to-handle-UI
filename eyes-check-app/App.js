@@ -34,7 +34,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} initialParams={{ isLoggedIn, handleLogin }} />
+        <Stack.Screen name="Login" component={LoginScreen} initialParams={{ isLoggedIn, handleLogin,setUserData }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} initialParams={{ isLoggedIn, userData, handleLogout }}/>
         <Stack.Screen name="Eyes Number Check" component={EyesCheckScreen} initialParams={{ isLoggedIn, userData, handleLogout }}/>

@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getDatabase, ref, set ,} from "firebase/database";
+import { getDatabase, ref, set ,update} from "firebase/database";
 
 
 const firebaseConfig = {
@@ -30,6 +30,31 @@ export function register(phoneNumber, fullName, age,gender,address,email,passwor
     
 }
 
+export function updateUser(phoneNumber, newData) {
+  const dbb = getDatabase();
+  const userRef = ref(dbb, 'EyesCheckApplication/users/' + phoneNumber);
+  
+  update(userRef,{"colorData":newData})
+      .then(() => {
+         alert("User data updated successfully");
+      })
+      .catch((error) => {
+          alert("Error updating user data: ", error);
+      });
+}
+
+export function updateUsertwo(phoneNumber, newData) {
+  const dbb = getDatabase();
+  const userRef = ref(dbb, 'EyesCheckApplication/users/' + phoneNumber);
+  
+  update(userRef,{"sizeData":newData})
+      .then(() => {
+         alert("User data updated successfully");
+      })
+      .catch((error) => {
+          alert("Error updating user data: ", error);
+      });
+}
 
 
 

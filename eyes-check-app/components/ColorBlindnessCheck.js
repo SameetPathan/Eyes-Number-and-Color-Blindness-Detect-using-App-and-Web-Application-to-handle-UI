@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView,Dimensions,Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
+import { updateUser } from '../firebaseConfig';
 
 const ColorBlindnessCheck =({ navigation,route})  => {
 
-    const { handleLogout } = route.params;
+    const { handleLogout,userData } = route.params;
     const [shapes, setShapes] = useState([
         { id: 1, color: 'lightseagreen', name: 'Circle' },
         { id: 2, color: 'green', name: 'Square' },
@@ -24,6 +25,10 @@ const ColorBlindnessCheck =({ navigation,route})  => {
         { id: 15, color: 'lightyellow', name: 'Dragon' },
         { id: 16, color: 'lightskyblue', name: 'Mermaid' },
         { id: 17, color: 'lightcoral', name: 'Unicorn' },
+        { id: 18, color: 'lightblue', name: 'Unicorn' },
+        { id: 19, color: 'lightred', name: 'Unicorn' },
+        { id: 20, color: 'lightpink', name: 'Unicorn' },
+        { id: 21, color: 'lightorange', name: 'Unicorn' },
       ]);
       
   const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
@@ -50,12 +55,17 @@ const ColorBlindnessCheck =({ navigation,route})  => {
 
    
   const saveData = () => {
-    let formattedResponses = {};
+    let formattedResponses = [];
     Object.keys(responses).forEach((key, index) => {
-      formattedResponses[index + 1] = responses[key];
+      if(responses[key]=="Yes"){
+        formattedResponses.push(shapes[index + 1].color)
+        //formattedResponses[index + 1] = shapes[index + 1].color;
+      }
+      
     });
     speak("Response Saved");
-    Alert.alert('Formatted Responses', JSON.stringify(formattedResponses));
+    //Alert.alert('Formatted Responses', JSON.stringify(formattedResponses));
+    updateUser(userData["phoneNumber"], formattedResponses)
   };
 
   const handleReset = () => {

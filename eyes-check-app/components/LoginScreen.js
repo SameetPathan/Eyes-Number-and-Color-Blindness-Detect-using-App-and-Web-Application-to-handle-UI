@@ -5,7 +5,10 @@ import { Constants } from 'expo';
 import { getDatabase, ref, child, get } from "firebase/database";
 import * as Speech from 'expo-speech';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation,route }) => {
+
+  const { setUserData } = route.params;
+
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,8 +38,10 @@ const LoginScreen = ({ navigation }) => {
         if (userData.password === password) {
           //Alert.alert('Welcome', 'Login success.');
           speak("Login success");
+          setUserData(userData)
           navigation.navigate('Home')
           return userData;
+          
         } else {
           speak("Invalid Password");
           //Alert.alert('Error', 'Invalid Password');

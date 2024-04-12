@@ -2,11 +2,12 @@ import React, { useState,useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert,ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
+import { updateUsertwo } from '../firebaseConfig';
 
 const EyesCheckScreen = ({ navigation,route})  => {
     const [fontSize, setFontSize] = useState(2); 
     const [responses, setResponses] = useState({}); 
-    const { handleLogout } = route.params;
+    const { handleLogout,userData } = route.params;
     const increaseFontSize = () => {
       if (fontSize < 100) {
         setFontSize(fontSize + 4);
@@ -32,17 +33,19 @@ const EyesCheckScreen = ({ navigation,route})  => {
     };
   
     const saveData = () => {
-      let formattedResponses = {};
-      Object.keys(responses).forEach((key, index) => {
-        formattedResponses[index + 1] = responses[key];
-      });
+      // let formattedResponses = [];
+      // Object.keys(responses).forEach((key, index) => {
+      //   formattedResponses[index + 1] = responses[key];
+      // });
+      updateUsertwo(userData["phoneNumber"],fontSize)
       speak("Response Saved");
-      Alert.alert('Formatted Responses', JSON.stringify(formattedResponses));
+      //Alert.alert('Formatted Responses', JSON.stringify(formattedResponses));
     };
 
     const handleReset = () => {
       setResponses({});
       setFontSize(4);
+      //alert(JSON.stringify(userData["phoneNumber"]))
       speak("Reset completed");
     };
   
