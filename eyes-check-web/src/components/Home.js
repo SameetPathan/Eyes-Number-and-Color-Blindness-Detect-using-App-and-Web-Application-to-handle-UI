@@ -18,7 +18,8 @@ import {
   faSpellCheck,
   faExpand,
   faCompress,
-  faQuestionCircle
+  faQuestionCircle,
+  faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -35,6 +36,16 @@ function Home() {
     'teal', 'brown', 'navy', 'maroon', 'olive', 'coral', 'lavender', 'turquoise', 'indigo', 'salmon'
   ]);
 
+  const handlePrint = () => {
+    const targetDiv = document.getElementById("contentToPrint");
+    const originalContents = document.body.innerHTML;
+    const printContents = targetDiv.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  };
+
 
   const [fileContent, setFileContent] = useState(null);
 
@@ -45,7 +56,7 @@ function Home() {
     reader.onload = (event) => {
       const content = event.target.result;
       setFileContent(content);
-      setProcessedText(content)
+      setText(content)
     };
 
     reader.readAsText(file);
@@ -179,6 +190,9 @@ function Home() {
                 <button type="button" className="btn btn-primary" onClick={handleHelp} style={{commonStyle,backgroundColor : colors[14]}}>
                     <FontAwesomeIcon icon={faQuestionCircle} />
                 </button>
+                <button type="button" className="btn btn-primary" onClick={handlePrint}>
+                <FontAwesomeIcon icon={faDownload} /> {/* Assuming you have imported faDownload */}
+              </button>
 
                 <button type="button" className="btn btn-primary" style={{commonStyle,backgroundColor : colors[15]}}>
                     Word Count : {wordCount}
@@ -187,6 +201,8 @@ function Home() {
                 <button type="button" className="btn btn-primary" style={{commonStyle,backgroundColor : colors[17]}}>
                     Character Count : {charCount}
                 </button>
+
+               
                 <div>
                
                 </div>
@@ -200,19 +216,20 @@ function Home() {
                 placeholder="Enter your text here..."
                 style={{commonStyle,color : colors[18]}}
             ></textarea>
+            <input className='mt-3' accept="text/plain" type="file"  onChange={onFileChange} />
         </div>
         <div className="mb-3 mt-5" style={{commonStyle}}>
             <div class="alert" role="alert" style={{backgroundColor : colors[19]}}>
                 Processed Text:
             </div>
 
-            <div style={{ border: '1px solid #ccc', padding: '10px',color: colors[20] }}>
+            <div id="contentToPrint" style={{ border: '1px solid #ccc', padding: '10px',color: colors[20] ,marginBottom:"90px"}}>
                 <p dangerouslySetInnerHTML={{ __html: processedText }}></p>
             </div>
         </div>
 
         <div>
-      <input type="file" onChange={onFileChange} />
+      
       
     </div>
   

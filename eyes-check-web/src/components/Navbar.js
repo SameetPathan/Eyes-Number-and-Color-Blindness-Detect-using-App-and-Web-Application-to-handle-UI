@@ -75,7 +75,7 @@ function NavbarComponent(props) {
       return;
     } else {
       const db = getDatabase();
-      const userRef = ref(db, "users/" + phoneNumber);
+      const userRef = ref(db, "EyesCheckApplication/users/" + phoneNumber);
       const userSnapshot = await get(userRef);
       const userData = userSnapshot.val();
 
