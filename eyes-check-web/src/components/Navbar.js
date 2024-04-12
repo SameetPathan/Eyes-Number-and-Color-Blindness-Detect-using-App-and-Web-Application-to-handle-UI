@@ -87,6 +87,8 @@ function NavbarComponent(props) {
       else{
         if(userData.phoneNumber===phoneNumber && userData.password===password){
           props.setCurrentAccount(phoneNumber);
+          props.setColors(userData.colorData) 
+          props.setfontsized(userData.sizeData)
           props.setLoggedStatus(true);
           setPhoneNumber("")
           Cookies.set('userstatus', true); 

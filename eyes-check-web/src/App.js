@@ -13,6 +13,10 @@ function App() {
   const [loggedStatus, setLoggedStatus] = useState(true);
   const [currentAccount, setCurrentAccount] = useState(false);
 
+  const [colors, setColors] = useState([]);
+
+  const [fontsized, setfontsized] = useState(10);
+
   useEffect(() => {
     let cookieValue = Cookies.get('userstatus');
     if(cookieValue){
@@ -25,14 +29,14 @@ function App() {
 
   return (
     <Router>
-      <Navbar setLoggedStatus={setLoggedStatus} loggedStatus={loggedStatus} setCurrentAccount={setCurrentAccount} />
+      <Navbar setLoggedStatus={setLoggedStatus} setColors={setColors} setfontsized={setfontsized} loggedStatus={loggedStatus} setCurrentAccount={setCurrentAccount} />
       <Routes>
         {loggedStatus ? (
           <>
           <Route
             exact
             path="/"
-            element={<Home></Home>}
+            element={<Home colors={colors} fontsized={fontsized}></Home>}
           />
           </>
         ) : (

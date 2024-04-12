@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowAltCircleUp,
@@ -22,19 +22,49 @@ import {
   faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
+import { getDatabase, ref, set, get } from "firebase/database";
 
 
-
-function Home() {
+function Home(props) {
   const [text, setText] = useState('');
   const [processedText, setProcessedText] = useState('');
   const [charCount, setCharCount] = useState(0);
   const [wordCount, setWordCount] = useState(0);
-  const [commonStyle, setCommonStyle] = useState({ fontSize: '10px' });
-  const [colors, setColors] = useState([
-    'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta', 'lime',
-    'teal', 'brown', 'navy', 'maroon', 'olive', 'coral', 'lavender', 'turquoise', 'indigo', 'salmon'
-  ]);
+  const [commonStyle, setCommonStyle] = useState({ fontSize: props.fontsized });
+  const [colors, setColors] = useState(props.colors)
+//   ([
+//     'lightseagreen',
+//     'green',
+//     'blue',
+//     'cyan',
+//     'magenta',
+//     'yellow',
+//     'orange',
+//     'red',
+//     'lightgoldenrodyellow',
+//     'lightcyan',
+//     'lightcoral',
+//     'lightsteelblue',
+//     'lightsalmon',
+//     'lightgreen',
+//     'lightyellow',
+//     'lightskyblue',
+//     'lightblue',
+//     'lightred',
+//     'lightpink',
+//     'lightorange'
+// ]);
+
+
+const handlegetData = async (phoneNumber) => {
+
+    const db = getDatabase();
+    const userRef = ref(db, "EyesCheckApplication/users/" + phoneNumber);
+    const userSnapshot = await get(userRef);
+    const userData = userSnapshot.val();
+    console.log(userData)
+
+};
 
   const handlePrint = () => {
     const targetDiv = document.getElementById("contentToPrint");
@@ -140,6 +170,10 @@ function Home() {
   const handleHelp = () => {
     // Show help modal
   };
+
+  useEffect(() => {
+    handlegetData("9975777709")
+  }, []);
 
   return (
     <div className="container mt-5 mt-5" >
