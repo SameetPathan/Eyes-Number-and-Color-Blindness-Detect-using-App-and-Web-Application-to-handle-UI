@@ -8,6 +8,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ColorTester from "./components/CheckUpCode/ColorCheckUp";
+import NumberTester from "./components/CheckUpCode/EyesCheckup";
+
 
 function App() {
   const [loggedStatus, setLoggedStatus] = useState(true);
@@ -35,9 +38,22 @@ function App() {
           <>
           <Route
             exact
-            path="/"
-            element={<Home colors={colors} fontsized={fontsized}></Home>}
+            path="/eyes-number"
+            element={<NumberTester></NumberTester>}
           />
+
+          <Route
+          exact
+          path="/eyes-color"
+          element={<ColorTester></ColorTester>}
+        />
+
+        <Route
+        exact
+        path="/"
+        element={<Home currentAccount={currentAccount} colors={colors} fontsized={fontsized}></Home>}
+      />
+
           </>
         ) : (
           <>

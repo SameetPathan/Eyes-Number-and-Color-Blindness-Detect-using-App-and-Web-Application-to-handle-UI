@@ -30,30 +30,8 @@ function Home(props) {
   const [processedText, setProcessedText] = useState('');
   const [charCount, setCharCount] = useState(0);
   const [wordCount, setWordCount] = useState(0);
-  const [commonStyle, setCommonStyle] = useState({ fontSize: props.fontsized });
+  const [commonStyle, setCommonStyle] = useState({ fontSize: 35 });
   const [colors, setColors] = useState(props.colors)
-//   ([
-//     'lightseagreen',
-//     'green',
-//     'blue',
-//     'cyan',
-//     'magenta',
-//     'yellow',
-//     'orange',
-//     'red',
-//     'lightgoldenrodyellow',
-//     'lightcyan',
-//     'lightcoral',
-//     'lightsteelblue',
-//     'lightsalmon',
-//     'lightgreen',
-//     'lightyellow',
-//     'lightskyblue',
-//     'lightblue',
-//     'lightred',
-//     'lightpink',
-//     'lightorange'
-// ]);
 
 
 const handlegetData = async (phoneNumber) => {
@@ -100,83 +78,58 @@ const handlegetData = async (phoneNumber) => {
   };
 
   const handleUppercase = () => {
-    setProcessedText(text.toUpperCase());
+    setText(text.toUpperCase());
   };
 
   const handleLowercase = () => {
-    setProcessedText(text.toLowerCase());
+    setText(text.toLowerCase());
   };
 
   const handleReverse = () => {
-    setProcessedText(text.split('').reverse().join(''));
+    setText(text.split('').reverse().join(''));
   };
 
   const handleTrim = () => {
-    setProcessedText(text.trim());
+    setText(text.trim());
   };
 
-  // New Features
   const handleItalicize = () => {
-    setProcessedText('<em>' + text + '</em>');
+    setText('<em>' + text + '</em>');
   };
 
   const handleUnderline = () => {
-    setProcessedText('<u>' + text + '</u>');
+    setText('<u>' + text + '</u>');
   };
 
   const handleStrikethrough = () => {
-    setProcessedText('<del>' + text + '</del>');
+    setText('<del>' + text + '</del>');
   };
 
   const handleAlign = (alignment) => {
-    setProcessedText('<div style="text-align:' + alignment + ';">' + text + '</div>');
+    setText('<div style="text-align:' + alignment + ';">' + text + '</div>');
   };
 
   const handleFontChange = (font) => {
-    setProcessedText('<span style="font-family:' + font + ';">' + text + '</span>');
+    setText('<span style="font-family:' + font + ';">' + text + '</span>');
   };
 
   const handleColorChange = (color) => {
-    setProcessedText('<span style="color:' + color + ';">' + text + '</span>');
+    setText('<span style="color:' + color + ';">' + text + '</span>');
   };
 
   const handleHighlight = () => {
-    setProcessedText('<mark>' + text + '</mark>');
+    setText('<mark>' + text + '</mark>');
   };
 
-  const handleSave = () => {
-    // Code to save text
-    alert('Text saved!');
-  };
 
-  const handleUpload = () => {
-    // Code to upload text
-    alert('Text uploaded!');
-  };
 
-  const handleSpellCheck = () => {
-    // Code to perform spell check
-    alert('Spell check complete!');
-  };
-
-  const handleExpand = () => {
-    // Expand text area
-  };
-
-  const handleCompress = () => {
-    // Compress text area
-  };
-
-  const handleHelp = () => {
-    // Show help modal
-  };
 
   useEffect(() => {
-    handlegetData("9975777709")
+    handlegetData(props.currentAccount)
   }, []);
 
   return (
-    <div className="container mt-5 mt-5" >
+    <div className="container mt-5 mt-5 border shadow p-3 mb-5" >
         <div className="form-group" >
             <div className="btn-group container mb-5" role="group">
                 <button type="button" className="btn btn-primary" onClick={handleUppercase} style={{commonStyle,backgroundColor : colors[0]}}>
@@ -218,12 +171,7 @@ const handlegetData = async (phoneNumber) => {
                 <button type="button" className="btn btn-primary" onClick={handleHighlight} style={{commonStyle,backgroundColor : colors[12]}}>
                     <FontAwesomeIcon icon={faHighlighter} />
                 </button>
-                <button type="button" className="btn btn-primary" onClick={handleSpellCheck} style={{commonStyle,backgroundColor : colors[13]}}>
-                    <FontAwesomeIcon icon={faSpellCheck} />
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleHelp} style={{commonStyle,backgroundColor : colors[14]}}>
-                    <FontAwesomeIcon icon={faQuestionCircle} />
-                </button>
+               
                 <button type="button" className="btn btn-primary" onClick={handlePrint}>
                 <FontAwesomeIcon icon={faDownload} /> {/* Assuming you have imported faDownload */}
               </button>
@@ -242,25 +190,16 @@ const handlegetData = async (phoneNumber) => {
                 </div>
             </div>
 
-            <textarea
-                className="form-control"
-                rows="8"
-                value={text}
-                onChange={handleTextChange}
-                placeholder="Enter your text here..."
-                style={{commonStyle,color : colors[18]}}
-            ></textarea>
+          <div id="contentToPrint">
+            <p
+           
+              dangerouslySetInnerHTML={{ __html: text }}
+              style={{ ...commonStyle, color: colors[18] }}
+            />
+            </div>
             <input className='mt-3' accept="text/plain" type="file"  onChange={onFileChange} />
         </div>
-        <div className="mb-3 mt-5" style={{commonStyle}}>
-            <div class="alert" role="alert" style={{backgroundColor : colors[19]}}>
-                Processed Text:
-            </div>
-
-            <div id="contentToPrint" style={{ border: '1px solid #ccc', padding: '10px',color: colors[20] ,marginBottom:"90px"}}>
-                <p dangerouslySetInnerHTML={{ __html: processedText }}></p>
-            </div>
-        </div>
+      
 
         <div>
       

@@ -88,6 +88,7 @@ function NavbarComponent(props) {
         if(userData.phoneNumber===phoneNumber && userData.password===password){
           props.setCurrentAccount(phoneNumber);
           props.setColors(userData.colorData) 
+          debugger
           props.setfontsized(userData.sizeData)
           props.setLoggedStatus(true);
           setPhoneNumber("")
@@ -161,6 +162,16 @@ function NavbarComponent(props) {
    
       {props.loggedStatus ? (
         <>
+
+        <Link to="/eyes-number" className="btn btn-outline-success my-2 my-sm- mr-2">
+            <i className="fas fa-tachometer-alt"></i> Eyes Number Check up
+          </Link>
+
+          <Link to="/eyes-color" className="btn btn-outline-success my-2 my-sm- mr-2">
+            <i className="fas fa-tachometer-alt"></i> Eyes Colour Check up
+          </Link>
+
+
           <Link to="/" className="btn btn-outline-success my-2 my-sm- mr-2">
             <i className="fas fa-tachometer-alt"></i> Dashboard
           </Link>
