@@ -8,6 +8,7 @@ import HomeScreen from './components/HomeScreen';
 import EyesCheckScreen from './components/EyesCheckScreen';
 import * as Speech from 'expo-speech';
 import ColorBlindnessCheck from './components/ColorBlindnessCheck';
+import VoiceInputComponent from './components/VoiceInput';
 
 const Stack = createStackNavigator();
 
@@ -33,9 +34,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Voice">
         <Stack.Screen name="Login" component={LoginScreen} initialParams={{ isLoggedIn, handleLogin,setUserData }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Voice" component={VoiceInputComponent} />
         <Stack.Screen name="Home" component={HomeScreen} initialParams={{ isLoggedIn, userData, handleLogout }}/>
         <Stack.Screen name="Eyes Number Check" component={EyesCheckScreen} initialParams={{ isLoggedIn, userData, handleLogout }}/>
         <Stack.Screen name="Eyes Colour Check" component={ColorBlindnessCheck} initialParams={{ isLoggedIn, userData, handleLogout }}/>
