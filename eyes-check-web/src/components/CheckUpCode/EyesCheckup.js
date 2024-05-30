@@ -9,6 +9,7 @@ const NumberTester = () => {
   const [speech, setSpeech] = useState(null);
   const [isStarted, setIsStarted] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [showResponses, setShowResponses] = useState(false);
 
   const getYesNo = async () => {
     try {
@@ -26,6 +27,7 @@ const NumberTester = () => {
   const sendResponse = async () => {
     try {
       console.log(responses);
+      setShowResponses(true);
       // Save responses to the database or process them as needed
     } catch (error) {
       console.log("Data Error");
@@ -55,7 +57,7 @@ const NumberTester = () => {
   };
 
   const handleResponse = (response, indexT) => {
-    const updatedResponses = [...responses, { Number: colorsList[indexT], response }];
+    const updatedResponses = [...responses, { number: colorsList[indexT], response }];
     setResponses(updatedResponses);
     setIndex(indexT);
     const textToSpeech = new SpeechSynthesisUtterance();
@@ -97,7 +99,7 @@ const NumberTester = () => {
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '66vh' }}>
         <div>
           <div className="color-container" style={{ textAlign: 'center' }}>
-            {index < colorsList.length ? (
+            {index < colorsList.length && !showResponses ? (
               <>
                 <div
                   className="color-box"
@@ -112,8 +114,7 @@ const NumberTester = () => {
                     justifyContent: 'center',
                     color: 'black',
                     fontSize: `${colorsList[index]}px`,
-              marginTop:"200px",
-              
+                    marginTop: "200px",
                   }}
                 >
                   {colorsList[index]}
@@ -129,22 +130,35 @@ const NumberTester = () => {
                     No
                   </button>
                 </div>
-                <div className="button-group mt-5 mb-5" style={{marginBottom:"200px"}}>
+                <div className="button-group mt-5 mb-5" style={{ marginBottom: "200px" }}>
                   <button className="btn btn-success ml-2" style={{ height: "60px", width: "200px" }} onClick={sendResponse}>
                     Complete check and save response
                   </button>
+                </div>
+                <div  style={{ height: "60px", width: "200px" }}>
                 </div>
               </>
             ) : (
               <div>
                 <h2>Responses</h2>
-                <ul>
-                  {responses.map((item, index) => (
-                    <li key={index}>
-                      Color: <span style={{ color: `hsl(${item.color}, 100%, 50%)` }}>{item.color}</span> - Response: {item.response}
-                    </li>
-                  ))}
-                </ul>
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Number</th>
+                      <th>Color</th>
+                      <th>Response</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {responses.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.number}</td>
+                        <td style={{ backgroundColor: `hsl(${item.number}, 100%, 50%)` }}>&nbsp;</td>
+                        <td>{item.response}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

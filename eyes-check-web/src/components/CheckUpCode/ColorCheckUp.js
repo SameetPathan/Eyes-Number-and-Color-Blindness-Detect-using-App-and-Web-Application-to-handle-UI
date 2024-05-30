@@ -17,6 +17,7 @@ const ColorTester = () => {
   const [speech, setSpeech] = useState(null);
   const [isStarted, setIsStarted] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [showResponses, setShowResponses] = useState(false);
 
   const getYesNo = async () => {
     try {
@@ -34,6 +35,7 @@ const ColorTester = () => {
   const sendResponse = async () => {
     try {
       console.log(responses);
+      setShowResponses(true);
       // Save responses to the database or process them as needed
     } catch (error) {
       console.log("Data Error");
@@ -93,10 +95,10 @@ const ColorTester = () => {
       <div className="alert alert-primary" role="alert">
         Eyes Color Blindness Check
       </div>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '66vh',marginBottom:"100px"}}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '66vh', marginBottom: "100px" }}>
         <div>
           <div className="color-container" style={{ textAlign: 'center' }}>
-            {index < colorsList.length ? (
+            {index < colorsList.length && !showResponses ? (
               <>
                 <div
                   className="color-box"
@@ -111,7 +113,7 @@ const ColorTester = () => {
                     color: '#ffffff',
                     fontSize: '24px',
                     marginLeft: "87px",
-                    marginTop:"200px"
+                    marginTop: "200px"
                   }}
                 >
                   Speak or Select
@@ -132,17 +134,30 @@ const ColorTester = () => {
                     Complete check and save response
                   </button>
                 </div>
+                <div style={{ height: "60px", width: "200px" }}>
+                </div>
               </>
             ) : (
               <div>
                 <h2>Responses</h2>
-                <ul>
-                  {responses.map((item, index) => (
-                    <li key={index}>
-                      Color: <span style={{ color: item.color }}>{item.color}</span> - Response: {item.response}
-                    </li>
-                  ))}
-                </ul>
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Color</th>
+                      <th>Hex Code</th>
+                      <th>Response</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {responses.map((item, index) => (
+                      <tr key={index}>
+                        <td style={{ backgroundColor: item.color }}>&nbsp;</td>
+                        <td>{item.color}</td>
+                        <td>{item.response}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
